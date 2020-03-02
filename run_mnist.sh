@@ -1,0 +1,10 @@
+CUDA_VISIBLE_DEVICDES=1 python ./main.py --self_att --model_name self_att2
+CUDA_VISIBLE_DEVICDES=1 python ./main.py --self_att --model_name self_att2 --seed 2
+CUDA_VISIBLE_DEVICDES=1 python ./main.py --self_att --model_name self_att2 --seed 3
+CUDA_VISIBLE_DEVICDES=1 python ./main.py --self_att --model_name self_att2 --seed 4
+CUDA_VISIBLE_DEVICDES=1 python ./main.py --self_att --model_name self_att2 --seed 5
+CUDA_VISIBLE_DEVICDES=1 python ./main.py --seed 1
+CUDA_VISIBLE_DEVICDES=1 python ./main.py --seed 2
+CUDA_VISIBLE_DEVICDES=1 python ./main.py --seed 3
+CUDA_VISIBLE_DEVICDES=1 python ./main.py --seed 4
+CUDA_VISIBLE_DEVICDES=1 python ./main.py --seed 5
