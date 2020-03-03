@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from distributions import log_Bernoulli
+from models.distributions import log_Bernoulli
 
 
 class CNN(nn.Module):
@@ -34,8 +34,13 @@ class CNN(nn.Module):
         torch.nn.init.xavier_uniform_(self.feature_extractor[3].weight)
         self.feature_extractor[3].bias.data.zero_()
 
+        if self.args.dataset_name == 'breast':
+            inner_length = 6
+        else:
+            inner_length = 5
+
         self.fc = nn.Sequential(
-            nn.Linear(48 * 5 * 5, self.L),
+            nn.Linear(48 * inner_length * inner_length, self.L),
             self.args.activation,
             nn.Dropout(0.2),
             nn.Linear(self.L, self.L),
@@ -81,7 +86,7 @@ class CNN(nn.Module):
 
         # Extract features
         H = self.feature_extractor(x)  # NxL
-        H = H.view(-1, 48 * 5 * 5)
+        H = H.view(-1, H.shape[1]*H.shape[3]*H.shape[2])
         
         H = self.fc(H)
 

@@ -2,6 +2,7 @@ import numpy as np
 from torch.autograd import Variable
 
 from colon_loader import ColonCancerBagsCross
+from breast_loader import BreastCancerBagsCross
 import time
 
 def train(args, train_loader, model, optimizer):
@@ -148,5 +149,39 @@ def load_warwick_cross(train_fold, val_fold, test_fold, loc_info):
                                     shuffle_bag=False,
                                     data_augmentation=False,
                                     loc_info=loc_info)
+
+    return train_set, val_set, test_set
+
+
+def load_breast(train_fold, val_fold, test_fold, loc_info):
+    print('\t-> Loading the following dataset')
+    train_set, val_set, test_set = load_breast_cross(train_fold, val_fold, test_fold, loc_info)
+    return train_set, val_set, test_set
+
+
+def load_breast_cross(train_fold, val_fold, test_fold, loc_info):
+    train_set = BreastCancerBagsCross('./Breast/',
+                                      train_val_idxs=train_fold,
+                                      test_idxs=test_fold,
+                                      train=True,
+                                      shuffle_bag=True,
+                                      data_augmentation=True,
+                                      loc_info=loc_info)
+
+    val_set = BreastCancerBagsCross('./Breast/',
+                                    train_val_idxs=val_fold,
+                                    test_idxs=test_fold,
+                                    train=True,
+                                    shuffle_bag=True,
+                                    data_augmentation=True,
+                                    loc_info=loc_info)
+
+    test_set = BreastCancerBagsCross('./Breast/',
+                                     train_val_idxs=train_fold,
+                                     test_idxs=test_fold,
+                                     train=False,
+                                     shuffle_bag=False,
+                                     data_augmentation=False,
+                                     loc_info=loc_info)
 
     return train_set, val_set, test_set

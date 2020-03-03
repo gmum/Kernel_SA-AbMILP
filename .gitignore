@@ -1,0 +1,5 @@
+*.tif
+*.xml
+.idea
+*.pyc
+tensorboard
