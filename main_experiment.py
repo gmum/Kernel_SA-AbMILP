@@ -52,6 +52,8 @@ parser.add_argument('--att_inv_q_spatial', action='store_true', default=False, h
 parser.add_argument('--att_module', action='store_true', default=False, help='training with module kernel')
 parser.add_argument('--out_loc', action='store_true', default=False, help='outer location')
 parser.add_argument('--loc_att', action='store_true', default=False, help='relative location')
+parser.add_argument('--laplace_att', action='store_true', default=False, help='laplace kernel')
+
 args = parser.parse_args()
 args.cuda = not args.no_cuda and torch.cuda.is_available()
 
@@ -72,7 +74,7 @@ def run(args, kwargs):
         args.loc_info = True
 
     if args.att_gauss_abnormal or args.att_inv_q_abnormal or args.att_gauss_spatial or args.att_inv_q_spatial or \
-            args.att_module:
+            args.att_module or args.laplace_att:
         args.self_att = True
 
     print(args)

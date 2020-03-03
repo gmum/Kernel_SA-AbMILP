@@ -184,6 +184,14 @@ class SelfAttention(nn.Module):
                          torch.abs(proj_query) -
                          torch.abs(proj_key[:, :, i].t())).sum(dim=1)
             energy = proj.view((1, length, length))
+        elif self.args.laplace_att:
+            proj = torch.zeros((length, length))
+            if self.args.cuda:
+                proj = proj.cuda()
+            proj_query = proj_query.permute(0, 2, 1)
+            for i in range(length):
+                proj[:, i] = (-torch.abs(proj_query - proj_key[:, :, i].t())).sum(dim=1)
+            energy = proj.view((1, length, length))
 
         elif self.args.att_gauss_abnormal:
             proj = torch.zeros((length, length))
