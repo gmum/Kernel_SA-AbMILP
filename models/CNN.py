@@ -184,6 +184,9 @@ class SelfAttention(nn.Module):
                          torch.abs(proj_query) -
                          torch.abs(proj_key[:, :, i].t())).sum(dim=1)
             energy = proj.view((1, length, length))
+        else:
+            energy = torch.bmm(proj_query, proj_key)
+        '''
         elif self.args.laplace_att:
             proj = torch.zeros((length, length))
             if self.args.cuda:
@@ -192,7 +195,7 @@ class SelfAttention(nn.Module):
             for i in range(length):
                 proj[:, i] = (-torch.abs(proj_query - proj_key[:, :, i].t())).sum(dim=1)
             energy = proj.view((1, length, length))
-
+        
         elif self.args.att_gauss_abnormal:
             proj = torch.zeros((length, length))
             if self.args.cuda:
@@ -210,9 +213,9 @@ class SelfAttention(nn.Module):
                 gauss = proj_query[0, i, :] - proj_key[0, i, :].view(-1, 1)
                 proj += torch.exp(F.relu(1 / (torch.pow(gauss, 2) + torch.tensor(1).cuda())))
             energy = proj.view((1, length, length))
-
-        else:
-            energy = torch.bmm(proj_query, proj_key)  # transpose check
+         '''
+#        else:
+#            energy = torch.bmm(proj_query, proj_key)  # transpose check
 
         if self.args.loc_info:
             if self.args.loc_gauss:

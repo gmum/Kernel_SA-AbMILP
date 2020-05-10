@@ -24,12 +24,13 @@ path = './Classification/'
 
 #snapshot_path = './snapshots/att_no_kernel_2020-02-16 01:10:44/'  #'./snapshots/att_inv_q_spatial_2020-02-15 18:31:46/'
 #snapshot_path = './snapshots/att_inv_q_spatial_2020-02-15 18:31:46/'
-snapshot_path = './snapshots/att_gauss_spatial_2020-02-15 20:12:26/'
+#snapshot_path = './snapshots/att_gauss_spatial_2020-02-15 20:12:26/'
+snapshot_path = './snapshots/module_10_folds_2020-03-04 13:39:30/'
 #snapshot_path = './snapshots/CNN_2020-02-01 12:22:58/'
 #model_name = 'att_no_kernel'
 #model_name = 'att_inv_q_spatial'
-model_name = 'att_gauss_spatial'
-model_name = 'CNN'
+model_name = 'module_10_folds'
+#model_name = 'CNN'
 args = torch.load(snapshot_path + model_name + '_fold1' + '.config')
 kwargs = {'num_workers': 0, 'pin_memory': True} if args.cuda else {}
 self_att = True
