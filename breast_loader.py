@@ -39,7 +39,7 @@ class BreastCancerBagsCross(data_utils.Dataset):
         if self.train:
             self.bag_list_train, self.labels_list_train = self.create_bags(self.dir_list_train)
         else:
-            self.bag_list_test, self.labels_list_test = self.create_bags(self.dir_list_test)
+            self.bag_list_test, self.labels_list_test, self.img_test = self.create_bags(self.dir_list_test)
 
     @staticmethod
     def split_dir_list(path, train_val_idxs, test_idxs):
@@ -55,6 +55,7 @@ class BreastCancerBagsCross(data_utils.Dataset):
     def create_bags(self, dir_list):
         bag_list = []
         labels_list = []
+        img_list = []
         for dir in dir_list:
             img = io.imread(dir)
             if img.shape[2] == 4:
@@ -71,8 +72,11 @@ class BreastCancerBagsCross(data_utils.Dataset):
 
             bag_list.append(bag)
             labels_list.append(label)
-
-        return bag_list, labels_list
+            img_list.append(img)
+        if self.train:
+            return bag_list, labels_list
+        else:
+            return bag_list, labels_list, img_list
 
     def transform_and_data_augmentation(self, bag):
         if self.data_augmentation:
@@ -101,9 +105,12 @@ class BreastCancerBagsCross(data_utils.Dataset):
         if self.train:
             bag = self.bag_list_train[index]
             label = self.labels_list_train[index]
+            return self.transform_and_data_augmentation(bag), label
         else:
             bag = self.bag_list_test[index]
             label = self.labels_list_test[index]
+            img = self.img_test[index]
+            return self.transform_and_data_augmentation(bag), label, img
 
         return self.transform_and_data_augmentation(bag), label
 
