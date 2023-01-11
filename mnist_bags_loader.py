@@ -47,7 +47,7 @@ class MnistBags(data_utils.Dataset):
                 labels = batch_data[1]
 
             while valid_bags_counter < self.num_bag:
-                bag_length = np.int(self.r.normal(self.mean_bag_length, self.var_bag_length, 1))
+                bag_length = int(self.r.normal(self.mean_bag_length, self.var_bag_length, 1))
                 if bag_length < 1:
                     bag_length = 1
                 indices = torch.LongTensor(self.r.randint(0, self.num_in_train, bag_length))
@@ -69,7 +69,7 @@ class MnistBags(data_utils.Dataset):
                             index_list.append(index)
                             bag_length_counter += 1
 
-                    index_list = np.array(index_list)
+                    index_list = np.array(torch.cat(index_list))
                     labels_in_bag = labels[index_list]
                     labels_in_bag = labels_in_bag >= self.target_number
                     labels_list.append(labels_in_bag)
@@ -99,7 +99,7 @@ class MnistBags(data_utils.Dataset):
                 labels = batch_data[1]
 
             while valid_bags_counter < self.num_bag:
-                bag_length = np.int(self.r.normal(self.mean_bag_length, self.var_bag_length, 1))
+                bag_length = int(self.r.normal(self.mean_bag_length, self.var_bag_length, 1))
                 if bag_length < 1:
                     bag_length = 1
                 indices = torch.LongTensor(self.r.randint(0, self.num_in_test, bag_length))
@@ -121,7 +121,8 @@ class MnistBags(data_utils.Dataset):
                             index_list.append(index)
                             bag_length_counter += 1
 
-                    index_list = np.array(index_list)
+                    # index_list = np.array(index_list)
+                    index_list = np.array(torch.cat(index_list))
                     labels_in_bag = labels[index_list]
                     labels_in_bag = labels_in_bag >= self.target_number
                     labels_list.append(labels_in_bag)
