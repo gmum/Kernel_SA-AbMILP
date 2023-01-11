@@ -41,7 +41,7 @@ args = parser.parse_args()
 args.cuda = not args.no_cuda and torch.cuda.is_available()
 
 model_name = '' + args.model_name + '_' + str(datetime.datetime.now())[0:19]
-sw = SummaryWriter('/media/data2/dawid/MIL_results/' + model_name)
+sw = SummaryWriter('./MIL_results/' + model_name)
 
 torch.manual_seed(args.seed)
 if args.cuda:
