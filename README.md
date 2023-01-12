@@ -11,7 +11,7 @@ The authors considered an identical problem and derived a new approach called Se
 
 Data point preparation
 ------------
-To meet crteria stated in the task, method of `MistBags` was modified with following code:
+To meet the criteria stated in the task, the method of `MistBags` was modified with the following code:
 
 ```python
 while True:
@@ -21,10 +21,9 @@ while True:
     else:
         continue
 ```
-`While` loop assures that `bag_length < 5` and `bag_length > 2500000000` will be rejected and another attempt to pick up value from desired range will be made.
+`While` loop assures that `bag_length < 5` and `bag_length > 2500000000` will be rejected and another attempt to pick up the value from the desired range will be made.
 
 The objective is to verify if 7 exists in the bag, so the parameter `xor_number` was set to 7.
-
 
 Evaluation of the model
 ------------
@@ -40,7 +39,7 @@ Below are presented train and test losses over 20 epochs for 10 different seeds.
 Conclusions
 ----------
 
-Self-Attention Attention-based Multiple Instance learning is definitely powerful method and as author presetned in the paper[1] set new standards. As a new method, it can deal with new range of problems with bigger complexity that is already demostraed by the authors[2].
+Self-Attention Attention-based Multiple Instance learning is a definitely powerful method and the authors illustrated in the paper[1] that it set new standards. As a new method, it can deal with a new range of problems with bigger complexity, which is already demonstrated by the authors[2].
 
 
 References
