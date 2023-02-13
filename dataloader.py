@@ -52,7 +52,12 @@ class MnistBags(data_utils.Dataset):
         labels_list = []
 
         for i in range(self.num_bag):
-            bag_length = np.int(self.r.normal(self.mean_bag_length, self.var_bag_length, 1))
+            while True:
+                bag_length = int(self.r.normal(self.mean_bag_length, self.var_bag_length, 1))
+                if bag_length >= 5 and bag_length <= 250000000:
+                    break
+                else:
+                    continue
             if bag_length < 1:
                 bag_length = 1
 
@@ -92,7 +97,7 @@ class MnistBags(data_utils.Dataset):
 
 if __name__ == "__main__":
 
-    train_loader = data_utils.DataLoader(MnistBags(xor_numbers=[9, 1],
+    train_loader = data_utils.DataLoader(MnistBags(xor_numbers=[7],
                                                    mean_bag_length=10,
                                                    var_bag_length=2,
                                                    num_bag=100,
@@ -101,7 +106,7 @@ if __name__ == "__main__":
                                          batch_size=1,
                                          shuffle=True)
 
-    test_loader = data_utils.DataLoader(MnistBags(xor_numbers=[9, 1],
+    test_loader = data_utils.DataLoader(MnistBags(xor_numbers=[7],
                                                   mean_bag_length=10,
                                                   var_bag_length=2,
                                                   num_bag=100,
@@ -114,7 +119,7 @@ if __name__ == "__main__":
     mnist_bags_train = 0
     for batch_idx, (bag, label) in enumerate(train_loader):
         len_bag_list_train.append(int(bag.squeeze(0).size()[0]))
-        mnist_bags_train += label[0].numpy()[0]
+        mnist_bags_train += label[0].numpy()
     print('Number positive train bags: {}/{}\n'
           'Number of instances per bag, mean: {}, max: {}, min {}\n'.format(
         mnist_bags_train, len(train_loader),
@@ -124,8 +129,8 @@ if __name__ == "__main__":
     mnist_bags_test = 0
     for batch_idx, (bag, label) in enumerate(test_loader):
         len_bag_list_test.append(int(bag.squeeze(0).size()[0]))
-        mnist_bags_test += label[0].numpy()[0]
+        mnist_bags_test += label[0].numpy()
     print('Number positive test bags: {}/{}\n'
-          'Number of instances per bag, mean: {}, max: {}, min {}\n'.format(
+          'Number of instances per bag, mean: {}, min: {}, max {}\n'.format(
         mnist_bags_test, len(test_loader),
         np.mean(len_bag_list_test), np.min(len_bag_list_test), np.max(len_bag_list_test)))
