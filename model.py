@@ -83,7 +83,7 @@ class SelfAttention(nn.Module):
         self.query_conv = nn.Conv1d(in_channels=in_dim, out_channels=in_dim // 8, kernel_size=1)
         self.key_conv = nn.Conv1d(in_channels=in_dim, out_channels=in_dim // 8, kernel_size=1)
         self.value_conv = nn.Conv1d(in_channels=in_dim, out_channels=in_dim, kernel_size=1)
-        self.gamma = nn.Parameter((torch.zeros(1)).cuda())
+        self.gamma = nn.Parameter((torch.ones(1)).cuda())
         self.softmax = nn.Softmax(dim=-1)
         self.gamma_att = nn.Parameter((torch.ones(1)).cuda())
 
